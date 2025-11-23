@@ -4,10 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <meta property="og:title" content="daslens" />    
+    <meta property="og:title" content="das.lens | Photography Portfolio" />    
+    <!-- Updated Favicon to a generic aperture icon to match the brand or use custom logo if available -->
+    <!-- Using a phosphor icon SVG data URI as a placeholder for the shutter icon if a file isn't available, 
+         but keeping the user's link as requested, assuming it might be updated later. 
+         For now, I'll keep the user's link but update the Title Text. -->
     <link rel="icon" href="https://raw.githubusercontent.com/subhzd/icons/refs/heads/main/aayush.png" />
 
-    <title>daslens</title>
+    <title>das.lens</title>
     
     <!-- Tailwind CSS -->
     <script src="cdn.tailwindcss.com"></script>
@@ -199,7 +203,7 @@
             <div class="container mx-auto px-6 py-4 flex justify-between items-center">
                 <a href="#" class="text-2xl font-bold tracking-tighter flex items-center gap-2">
                     <i class="ph-fill ph-aperture text-brand-accent"></i>
-                    <span class="text-slate-900 dark:text-white">das<span class="text-brand-accent">lens</span></span>
+                    <span class="text-slate-900 dark:text-white">das<span class="text-brand-accent">.lens</span></span>
                 </a>
                 <div class="flex items-center gap-6">
                     <div class="hidden md:flex gap-4">
@@ -242,17 +246,23 @@
             </h1>
             
             <p class="text-lg md:text-xl text-slate-600 dark:text-slate-400 mb-8 leading-relaxed max-w-2xl mx-auto animate-slide-up transition-colors duration-300" style="animation-delay: 0.2s;">
-                Yo, I'm the eye behind <strong>Das Lens</strong>. Exploring the world through my lens—finding the vibe in urban noise and silence. Welcome to my gallery.
+                Yo, I'm the eye behind <strong>das.lens</strong>. Exploring the world through my lens—finding the vibe in urban noise and silence. Welcome to my gallery.
             </p>
 
-            <div class="flex justify-center gap-4 animate-slide-up" style="animation-delay: 0.3s;">
+            <!-- Action Buttons -->
+            <div class="flex flex-wrap justify-center gap-4 animate-slide-up" style="animation-delay: 0.3s;">
                 <a href="#albums" class="bg-brand-accent text-white px-8 py-3 rounded-full font-bold hover:bg-blue-600 transition-colors flex items-center gap-2 shadow-lg shadow-brand-accent/25 hover:scale-105 transform duration-200">
                     Explore Albums <i class="ph-bold ph-arrow-down"></i>
                 </a>
-                <!-- Contact Button -->
+                
                 <button onclick="openModal()" class="glass-panel text-slate-900 dark:text-white px-6 py-3 rounded-full font-semibold hover:bg-black/5 dark:hover:bg-white/10 transition-colors flex items-center gap-2 hover:scale-105 transform duration-200">
                     <i class="ph-fill ph-envelope-simple"></i> Get in Touch
                 </button>
+
+                <!-- New Instagram Button -->
+                <a href="https://www.instagram.com/das.lens/" target="_blank" class="glass-panel text-slate-900 dark:text-white px-6 py-3 rounded-full font-semibold hover:bg-pink-500/20 dark:hover:bg-pink-500/20 hover:text-pink-500 transition-colors flex items-center gap-2 hover:scale-105 transform duration-200">
+                    <i class="ph-bold ph-instagram-logo text-xl"></i> Instagram
+                </a>
             </div>
         </div>
     </header>
@@ -300,15 +310,15 @@
             <div class="mb-8">
                 <a href="#" class="text-2xl font-bold tracking-tighter inline-flex items-center gap-2 mb-4">
                     <i class="ph-fill ph-aperture text-brand-accent"></i>
-                    <span class="text-slate-900 dark:text-white">das<span class="text-brand-accent">lens</span></span>
+                    <span class="text-slate-900 dark:text-white">das<span class="text-brand-accent">.lens</span></span>
                 </a>
                 <p class="text-slate-500 dark:text-slate-400 max-w-sm mx-auto">
-                    © <span id="year"></span> Das Lens Photography.<br>All rights reserved.
+                    © <span id="year"></span> das.lens Photography.<br>All rights reserved.
                 </p>
             </div>
             
             <div class="flex justify-center gap-6 mb-8">
-                <a href="#" class="text-slate-400 hover:text-brand-accent transition-colors text-2xl"><i class="ph-fill ph-instagram-logo"></i></a>
+                <a href="https://www.instagram.com/das.lens/" target="_blank" class="text-slate-400 hover:text-brand-accent transition-colors text-2xl"><i class="ph-fill ph-instagram-logo"></i></a>
                 <a href="#" class="text-slate-400 hover:text-brand-accent transition-colors text-2xl"><i class="ph-fill ph-twitter-logo"></i></a>
                 <a href="#" class="text-slate-400 hover:text-brand-accent transition-colors text-2xl"><i class="ph-fill ph-camera"></i></a>
             </div>
@@ -548,7 +558,7 @@ ${msg}
                 title: "Macro World",
                 description: "The little details we often miss.",
                 count: "33 Photos",
-                image: "https://lh3.googleusercontent.com/pw/AP1GczO0B0GEWY0mO_RLDMjtOC1vZQ2-6cXDbSWWqXetSF0xo3MqXNSLlo6kSESNObRImOoh3CRWmo22DyfSFeMfn7_LUNtJt07uX3n3LdiAa2kbdNU0CQg9sRI05fZF7wwkNwIpZV51uIixDGuBDHcsIHpaJLbX8_uVU0HDC_bTqweS1yBRqni3Pp9uz_WvOEKI5JiaiueWdWcFlaYFbwbKVs5S46UCPw8SYGcF5Ii-9u3PNam-N10jcUTOzDFAQX4_whRq8seuk1v10UQDZzxKfvKVNK6xOhCQSgAQLGx30IC6hkbV60gMtBxAbGGaoqpip6iwzdbjI0dXa1iTy7JSqCpWT9v2BP1YERNaFX1iHuf34bA4YRVKdEJsBYS0Oyu-wfO8pheSMjNLK0_glXVeBjpIW3j2uiBotvGiEAFgXxBk0JBfT_R5uVhLrRXlkl2n7pXe73sRwA-2Ac5jaW5HkHkpxFC7kzCZAEWcawvBOKfSlAOT1rlmxNawM5EeeuwrzUPHehfrSCwRnaywpqwpoRISppHaKX-0vB_TXq9b3hydyyiSk16OCs8t8kFL_yg1zOtjB3nR2iYSty39HhuekggvJF8ZSCNlV3o5aoVX1nUaCbYXpL6ehnxsF6M8Fb008X0RxZEZ6xx0LxmuGoOD7rXMyMDC2dIJpKMV1BPvWIr82KhmkxODxqH3OmXX_hjlgp72fBFsMph_awTAOrMKBywt9_b48rfsi0SYymQh1FkASrcwddrkaTrFCrORbwHuLzM8RWgp8O2EK9ffgPl-2jjbbqkSalfeQzF5BxmO5HzxAo9WFimb3vjq85b-5NtHm3TN3CSCvmeqtbXVi2k2bI4kxuptLpZzFrOunBvjpBDez42wV2dGIb1x818ySKdal91AYkpsj7v5PVZh_iI=w768-h512-s-no?authuser=0?q=80&w=2070&auto=format&fit=crop",
+                image: "https://lh3.googleusercontent.com/pw/AP1GczMlRaJTDs1dKUPNUJTIAl26tCbz4XOi1i04UQF1ky2K51CucTg1-50dnNNoV_1UKKbqFPTx8eVADOwcskOHVhwZ739a2UZixIyXQ6zgaQRx81HO1I8f7YHM8B3NtsvO2Q-QD3bFcAuDqmWeh0gaH2My09byS8cMQ4vNiQgnQW7rPy-eQpZZfCqZPx9mNda7zRsz0008noBxkjY_QpuRs383fLzd5qVrv11M7cK1y7PT0ikINb1yU3GDgG9H0tW9xDaSqyxKxWDAtmmp_bmqknolP5sa9WSApzMCr-d_jsGXzwt_qqpmIuRojTboTwKJ9ZJfyPjpfTKX6sxInJJJ7tXevhF9LDmqwGCTsm7DX6OMQk9ZVf9NdhuTyAN264FEPX2EAMSUL5bWap9ls2WCeaa0hu0Cpc8UfSxm-Cg-N87ivuZbQHC9aGjpOVVTz7sgDwIFuRsIACTH23Botz0g9OO6_hL36ei23kFUrVh91DCUpyLG4bhiWIWh9G2xQJCOT17dufPOQtLrw2wlnITdhvpbpYcf5dMwpGh7CAlyzw98tgnfkdpRWgF2vNz2AvsZAgnMjAKBsrt7torGejDB59Yq1yuhIaoAyqZ7_Dq5_z4P5CVBm_i1Gvn-OKmsyU7alXAHvkE84LuZbvnMx48blHvQha_OOWMnSkKxBYczTnY4wZElmKU9gS0VmeeCA27BVsamcqGyXTJZf8Yf3vm9XVKMNZ6pZ_hB8ZDs-uI6JQXN7ZOh19b-lgt_H9JAHMkkALe_U_F8HoWfxThCU0mYEk08RgyW3o9OrXkIHQk8Iji69FFwmgLPpe873BjjgwPGyp5aQ3WklTyfgw110njvyndnb_rF5wT2A2T6IBDfzfhZLSamCDNju4KI-m4_A7FZKhsFOMicjAhYuSHryBo=w2624-h1476-s-no?authuser=0$0?q=80&w=2070&auto=format&fit=crop",
                 link: "https://photos.google.com/",
                 fit: "cover"
             },
@@ -557,7 +567,7 @@ ${msg}
                 title: "Monochrome",
                 description: "Black and white composition.",
                 count: "19 Photos",
-                image: "https://lh3.googleusercontent.com/pw/AP1GczPVFTWAxL1Wp1NoDTogt2O_Oio2VHnE4fS7ks-f2p8WUnYbsWfuSk7d84jr995r62pJYNA2MSC07uirJTwLpwU2orHSgoczQAwISE-QdwLvUjft4UGEj8sX-b1n2q_epKPOdXV3T5YhTXMrLaG2Gx9b41DmBr_7ZN7b_wXra_Nhv14-IKXCASD5Y3cqImKWYY7JO0dzZ6jUjVLZs_lGd53TrNP6zchGRlDolrFRCuV2o2xKZnR0pG2U-Y_2zJxsiABo96Ob72UCnPrw9Ra-acCBRhPzIpMsSRspBjLyi4_ZJzrvKr87dZF-XEqOcQk_x75oSv0z1kdEp3OjpIV451iOmgNaud5mEHEKV-kcSXi6d09KkCifbw22IU5pWxyACtIulpfNhpdOi-FnuxftYOIfihDBAC_uCefHndpZa0od8XZTSdXRsid8g4QIGkUY_3c0Y84sthnxLOKS6xfEBBcDu0pKB9tqS-f87QmLBGd0qXUDplzajsRWLi41dYIcqw4zoBvJXuAAkwpmGPhyvtvkVNmat5XMyqZD-i8L62F3fiYOaRFXmvfEe6deF2ZvYBnRRBgx_JkjkofLLGChJKzBEUPYj1C1VzyDSpjeRn2YZ05uIZ2UvKMJi9uaL12dCZpDNdeixl0EedZ2i61nODZpQpXPNX6MVXwqDuSEnSa_EmCIPO7DDEG4_cqJMJ6LIHoyiHiL7GTf038XWA45gKH6udQ06Ft1vhNussV_zLk3I1OwMzbjPb3oU9Xr6A35DM--a2xnVkauhGjUCWhHHOlKMP1skW5jva1U7XfEPDWTVHFE49uK6UqvtXnNm8__vgtE1uZsENhlH-B8Ni00BI3eKxIzUM71Qf4ufD_UElNqAO0YFA-Dn7jmJCEqBL3bp1e4jiL3HWnOZXDKoP8=w1184-h864-s-no?authuser=0?q=80&w=1965&auto=format&fit=crop",
+                image: "https://lh3.googleusercontent.com/pw/AP1GczNY6_Hmb8qe4Y5Nlifww5GKRsxZb2pv67Pv1kthwfryoQWbiQCgDUGRRFc-qkxSQWqc916tpqhfiWmEb3taYXexTWCwonrchiROJcK1jPduCk3Egi8jVUqZUgLgwgitYYS-Unr_aGJ7B61XzXAg13z8wmWeRHigIMeCFKvUiBD7fmWRG3GLQU0Eclynv-94-uUEfcgO9hTBD89l__HzL8Hq2KKWQhe2hUZA6fIItu5GSicW1Cix60o0-Rw-BqFXgrVUFviFwhZMqBb8o2cnTbzE7nJupkycg0wcmNqcq0BcHBx7dLTvO6kU06QcCCVvA0rXQiD4eV7BhqxIjZDJZWooCexhjbrxHM61bKBQ7BKrpYt0d1voIgngySikTjYdqYDnVGkD5dz_biXmPGcXSCwtwiiUjAB-D_I4eHv23gT8IGVSgKFfvW8s5RvWXpUjPgDMSpq9cSD7kq_yfi3olMUzNaNayanzZLWd2BAYs6Q7_L1kn5dyf6o8W2YN0wbQFQt8Ni8nFCXA8ob-7Tmqeg_MiwZIRgt4Q-JynfDy3TSA_ekYzDhIpRlqSxdH4NqZi5aLreYfdlla9QO97eZDbPGtLSgq1ECJlXQomF5oB2wNtl46IF51W8Iy2VJACSIlWH3aAdD3I1iik-MBGGCkrp2-8YzyqF2ThA27LfJLmYdvNkEYjLhmDB332PLSMNlDNiJZV16teHV-crvzISoIocHGyQs93YAbTovkZ72pp_9HJs8kKFIs35Zqe1EGy9DbJUFoeP0c6oXn_qTxBANzrBWOMndKju03fX3bYKsje-3rF_3eR5wfoQaWKxgbXCc6rfNGGJ4e31Q6WsKDcnpSHzPzO64Cha3rXk-GeayvaRTYM-uiUXDeZufveiwVvx6Velau-OWJ9VNePMm1dso=w768-h512-s-no?authuser=0$0?q=80&w=1965&auto=format&fit=crop",
                 link: "https://photos.google.com/",
                 fit: "cover"
             }
