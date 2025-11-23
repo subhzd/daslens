@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <meta property="og:title" content="Das Lens | Photography Portfolio" />    
+    <meta property="og:title" content="Das Lens 🔍" />    
     <link rel="icon" href="https://raw.githubusercontent.com/subhzd/icons/refs/heads/main/aayush.png" />
 
-    <title>Das Lens | Photography Portfolio</title>
+    <title>Das Lens 🔍 </title>
     
     <!-- Tailwind CSS -->
     <script src="cdn.tailwindcss.com"></script>
@@ -40,6 +40,7 @@
                         'slide-up': 'slideUp 0.8s ease-out forwards',
                         'lens-glint': 'lensGlint 4s ease-in-out infinite',
                         'pulse-glow': 'pulseGlow 3s ease-in-out infinite',
+                        'heart-pop': 'heartPop 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275)',
                     },
                     keyframes: {
                         float: {
@@ -57,6 +58,11 @@
                         pulseGlow: {
                             '0%, 100%': { boxShadow: '0 0 20px rgba(59, 130, 246, 0.3)' },
                             '50%': { boxShadow: '0 0 50px rgba(59, 130, 246, 0.6)' },
+                        },
+                        heartPop: {
+                            '0%': { transform: 'scale(1)' },
+                            '50%': { transform: 'scale(1.3)' },
+                            '100%': { transform: 'scale(1)' },
                         }
                     }
                 }
@@ -82,9 +88,31 @@
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
+        /* 3D Tilt Effect on Cards */
+        .album-card {
+            transition: transform 0.1s ease-out, box-shadow 0.3s ease;
+            transform-style: preserve-3d;
+        }
         .album-card:hover .album-overlay { opacity: 1; }
 
-        /* CRITICAL ANIMATIONS - Moved to CSS to ensure they always load */
+        /* Cursor Trail Particles */
+        .cursor-trail {
+            position: fixed;
+            width: 8px;
+            height: 8px;
+            background: linear-gradient(to right, #3b82f6, #8b5cf6);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            opacity: 0.8;
+            animation: fadeTrail 1s linear forwards;
+        }
+        @keyframes fadeTrail {
+            0% { transform: scale(1); opacity: 0.8; }
+            100% { transform: scale(0); opacity: 0; }
+        }
+
+        /* CRITICAL ANIMATIONS */
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
@@ -95,9 +123,14 @@
             100% { transform: scale(1.2) translate(-2%, -2%); }
         }
         
-        /* Helper class for JS injection */
         .animate-ken-burns {
             animation: kenBurns 20s ease-in-out infinite alternate;
+        }
+        
+        /* Fix for date inputs in dark mode */
+        .dark input[type="date"]::-webkit-calendar-picker-indicator,
+        .dark input[type="time"]::-webkit-calendar-picker-indicator {
+            filter: invert(1);
         }
 
         /* --- LENS EFFECT CSS --- */
@@ -105,7 +138,6 @@
             position: relative;
             border-radius: 50%;
             background: linear-gradient(145deg, #2a2a2a, #000000);
-            /* Updated shadow for depth + animation will add glow */
             box-shadow: 0 0 0 4px #1a1a1a, 0 0 0 5px #333, inset 0 0 40px rgba(0,0,0,0.8);
             z-index: 10;
         }
@@ -152,7 +184,7 @@
                 <div class="flex items-center gap-6">
                     <div class="hidden md:flex gap-4">
                         <a href="#albums" class="hover:text-brand-accent transition-colors text-sm font-medium">Albums</a>
-                        <a href="#contact" class="hover:text-brand-accent transition-colors text-sm font-medium">Contact</a>
+                        <button onclick="openModal()" class="hover:text-brand-accent transition-colors text-sm font-medium">Contact</button>
                     </div>
                     <!-- Theme Toggle -->
                     <button onclick="toggleTheme()" class="p-2 rounded-full hover:bg-black/5 dark:hover:bg-white/10 transition-colors focus:outline-none" aria-label="Toggle Dark Mode">
@@ -194,12 +226,13 @@
             </p>
 
             <div class="flex justify-center gap-4 animate-slide-up" style="animation-delay: 0.3s;">
-                <a href="#albums" class="bg-brand-accent text-white px-8 py-3 rounded-full font-bold hover:bg-blue-600 transition-colors flex items-center gap-2 shadow-lg shadow-brand-accent/25">
+                <a href="#albums" class="bg-brand-accent text-white px-8 py-3 rounded-full font-bold hover:bg-blue-600 transition-colors flex items-center gap-2 shadow-lg shadow-brand-accent/25 hover:scale-105 transform duration-200">
                     Explore Albums <i class="ph-bold ph-arrow-down"></i>
                 </a>
-                <a href="mailto:hello@daslens.aimaverick.me" class="glass-panel text-slate-900 dark:text-white px-6 py-3 rounded-full font-semibold hover:bg-black/5 dark:hover:bg-white/10 transition-colors flex items-center gap-2">
+                <!-- Updated Contact Button triggers Modal -->
+                <button onclick="openModal()" class="glass-panel text-slate-900 dark:text-white px-6 py-3 rounded-full font-semibold hover:bg-black/5 dark:hover:bg-white/10 transition-colors flex items-center gap-2 hover:scale-105 transform duration-200">
                     <i class="ph-fill ph-envelope-simple"></i> Get in Touch
-                </a>
+                </button>
             </div>
         </div>
     </header>
@@ -249,9 +282,139 @@
         </div>
     </footer>
 
+    <!-- Booking Form Modal (Updated) -->
+    <div id="contactModal" class="fixed inset-0 z-[100] hidden">
+        <!-- Backdrop -->
+        <div class="absolute inset-0 bg-black/60 backdrop-blur-sm" onclick="closeModal()"></div>
+        
+        <!-- Modal Content -->
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-md p-4">
+            <div class="glass-panel bg-white/90 dark:bg-slate-900/90 rounded-2xl p-8 shadow-2xl transform scale-95 transition-all duration-300" id="modalPanel">
+                <div class="flex justify-between items-center mb-6">
+                    <h3 class="text-2xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                        <i class="ph-bold ph-calendar-plus text-brand-accent"></i> Book a Session
+                    </h3>
+                    <button onclick="closeModal()" class="p-2 hover:bg-black/5 dark:hover:bg-white/10 rounded-full text-slate-500 dark:text-slate-400 transition-colors">
+                        <i class="ph-bold ph-x text-lg"></i>
+                    </button>
+                </div>
+                
+                <form onsubmit="sendEmail(event)" class="space-y-4">
+                    <!-- Name -->
+                    <div>
+                        <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1">Your Name</label>
+                        <input type="text" id="senderName" required placeholder="John Doe" class="w-full bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 rounded-lg px-4 py-2.5 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-brand-accent transition-all">
+                    </div>
+
+                    <!-- Date & Time Row -->
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1">Date</label>
+                            <input type="date" id="senderDate" required class="w-full bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 rounded-lg px-4 py-2.5 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-brand-accent transition-all">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1">Time</label>
+                            <input type="time" id="senderTime" required class="w-full bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 rounded-lg px-4 py-2.5 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-brand-accent transition-all">
+                        </div>
+                    </div>
+
+                    <!-- Duration -->
+                    <div>
+                        <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1">Duration</label>
+                        <input type="text" id="senderDuration" required placeholder="e.g. 2 Hours, All Day" class="w-full bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 rounded-lg px-4 py-2.5 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-brand-accent transition-all">
+                    </div>
+
+                    <!-- Details -->
+                    <div>
+                        <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1">Event Details</label>
+                        <textarea id="senderMsg" required rows="3" placeholder="Tell me about the vibe, location, or event type..." class="w-full bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 rounded-lg px-4 py-3 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-brand-accent transition-all"></textarea>
+                    </div>
+
+                    <button type="submit" class="w-full bg-brand-accent hover:bg-blue-600 text-white font-bold py-3 rounded-xl transition-all hover:scale-[1.02] active:scale-95 shadow-lg shadow-brand-accent/25 flex items-center justify-center gap-2">
+                        <span>Send Request</span> <i class="ph-bold ph-paper-plane-right"></i>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <!-- Logic -->
     <script>
         document.getElementById('year').textContent = new Date().getFullYear();
+
+        // --- DAZZLE: Cursor Trail Effect ---
+        document.addEventListener('mousemove', function(e) {
+            if (Math.random() < 0.8) return; 
+            const dot = document.createElement('div');
+            dot.className = 'cursor-trail';
+            dot.style.left = e.pageX + 'px';
+            dot.style.top = e.pageY + 'px';
+            document.body.appendChild(dot);
+            setTimeout(() => dot.remove(), 1000);
+        });
+
+        // --- 3D TILT LOGIC for Cards ---
+        function addTiltEffect(card) {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                const rotateX = ((y - centerY) / centerY) * -5; 
+                const rotateY = ((x - centerX) / centerX) * 5;
+                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.02)`;
+            });
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale(1)';
+            });
+        }
+
+        // --- MODAL LOGIC ---
+        function openModal() {
+            const modal = document.getElementById('contactModal');
+            modal.classList.remove('hidden');
+            setTimeout(() => {
+                document.getElementById('modalPanel').classList.remove('scale-95');
+                document.getElementById('modalPanel').classList.add('scale-100');
+            }, 10);
+        }
+
+        function closeModal() {
+            const panel = document.getElementById('modalPanel');
+            panel.classList.remove('scale-100');
+            panel.classList.add('scale-95');
+            setTimeout(() => {
+                document.getElementById('contactModal').classList.add('hidden');
+            }, 200);
+        }
+
+        function sendEmail(e) {
+            e.preventDefault();
+            // Gather all data
+            const name = document.getElementById('senderName').value;
+            const date = document.getElementById('senderDate').value;
+            const time = document.getElementById('senderTime').value;
+            const duration = document.getElementById('senderDuration').value;
+            const msg = document.getElementById('senderMsg').value;
+
+            // Format the email body
+            const subject = encodeURIComponent(`Booking Request: ${name}`);
+            const bodyContent = `
+Name: ${name}
+Date: ${date}
+Time: ${time}
+Duration: ${duration}
+
+Event Details:
+${msg}
+            `;
+            const body = encodeURIComponent(bodyContent.trim());
+            
+            // Trigger mailto
+            window.location.href = `mailto:aayushdas@icloud.com?subject=${subject}&body=${body}`;
+            closeModal();
+        }
 
         // Theme Toggle
         const html = document.documentElement;
@@ -281,7 +444,6 @@
         initTheme();
 
         // --- ALBUMS DATA ---
-        // NEW FEATURE: Added 'fit' and 'position' properties to help with cropping
         const albums = [
             {
                 id: 1,
@@ -290,7 +452,7 @@
                 count: "14 Photos",
                 image: "https://lh3.googleusercontent.com/pw/AP1GczPElhSSC5Pr90PLwUxLPYLhcnCCRnDREluppCdbrOV6G25Qrrz3cj6Ao-cOO0TmDOdDNiNBbqWOuaK2e8TzYnjBhUYd88_bOzMf3QVJR4-pixD2obK8M2xSbFh8gwZu83YnZtq4fQdPF05cxqQFKSHm=w2088-h1566-s-no?authuser=0?q=80&w=2078&auto=format&fit=crop",
                 link: "https://photos.app.goo.gl/U9BxAvQj5v8KSJfY8",
-                fit: "cover", // Default
+                fit: "cover",
                 position: "center"
             },
             {
@@ -309,9 +471,6 @@
                 count: "56 Photos",
                 image: "https://lh3.googleusercontent.com/pw/AP1GczMar0C9sfnadJFSdkL5pDKq2jovQCCUSzxKAZwZGRLOJbTl_CPooYRsEZI5mkWyXOVz7mzOJqfRxAXYUL-DtIahVPOvzQMRL6Kmk1rxwbiE8N5jRbatfkWqGmGGDJtTvVHnOTLe0YPE1En4fW7PZmEw0ksdWT_iWzcqUH0YDwcdXoudftM65lhaqOmVpdvCSXE528Kf6MRtYHEaEwUpQMDO3jBtA6w4h7qZuuxIcRe3_-Oxo5pU75dPucxNpsZOrG3NFnOjXLq8N4Wx72NQCcOOmW8iBUoZ8W7qWNiGQzJhJnoqp6Z3urHGKkomGdeFhjrTN3JAEf2k62hjFuPWzxQ0XdcO07-dn_ACokkwbuS4_zm11je0SijkuLdLbQgXY32f51Jc_EmqM4HLtd8Dk5YDBaM8UVY4vJqSECWZQ9-JhMBnh8nDYRNYuQqIwJf3bDlH_i5WlPrPh2GJHHteMqyMquUDLEYMWOOkRpor1z9FWFD_X1e2jH3EJI8W759u1BIH5Je0btO_gLqjc3Rvg1mvN2n2gJKe_q2kBIZIzT2pT4o3iWROT32gMbsLFI07-lwBx_35t5wGJqYF0INsoLFt6qIzZ_ud9IxMvzwoyDaBMz9vZVdhtV94oCtxeil3Cb7TbyxWOht9E-oeai5YG9xIS0UAI9oCjY5HP-TdkNd41AKeh_yWZghMlPCZn4-rvjA8HOhKwjVF11_WIhkHRFKjCr_fxCosNiucDblkhnhTJE9ySW6ztXC0kyBt3aF3-2YbVTxwCL-6q735X-4up6ZbZGZewixNt8Os17rWbHssGuAxHg8bqJxdCf8C30DgTmk5VQws-niZLcn8h58qG_RS4sHCcVpXlZ-PHa9H2E0xMibWJMIyzqhZ3Hhey5nbTPSkegz18gSXVdSYEME=w1600-h1200-s-no?authuser=0?q=80&w=2070&auto=format&fit=crop",
                 link: "https://www.instagram.com/das.lens/p/DNWdVEVSqyA/",
-                // FIX FOR CROPPED IMAGE:
-                // Use 'contain' to show the whole image with black bars
-                // OR Use 'cover' + 'top' if you just want to fix the head being cut off
                 fit: "contain", 
                 position: "center"
             },
@@ -344,37 +503,61 @@
             }
         ];
 
+        // --- FAVORITE LOGIC ---
+        function getFavorites() {
+            const stored = localStorage.getItem('favorites');
+            return stored ? JSON.parse(stored) : [];
+        }
+
+        function toggleFavorite(event, albumId) {
+            event.preventDefault(); 
+            event.stopPropagation();
+            
+            let favs = getFavorites();
+            const btn = document.getElementById(`fav-btn-${albumId}`);
+            const icon = btn.querySelector('i');
+            
+            if (favs.includes(albumId)) {
+                favs = favs.filter(id => id !== albumId);
+                icon.className = 'ph-bold ph-heart text-white'; 
+                btn.classList.remove('bg-brand-accent');
+                btn.classList.add('bg-white/10');
+            } else {
+                favs.push(albumId);
+                icon.className = 'ph-fill ph-heart text-white'; 
+                icon.style.animation = 'heartPop 0.3s forwards';
+                btn.classList.remove('bg-white/10');
+                btn.classList.add('bg-brand-accent');
+                setTimeout(() => icon.style.animation = '', 300);
+            }
+            localStorage.setItem('favorites', JSON.stringify(favs));
+        }
+
         // --- CARD RENDERING LOGIC ---
         const grid = document.getElementById('album-grid');
+        const favorites = getFavorites();
         
         albums.forEach((album, index) => {
             const card = document.createElement('a');
             card.href = album.link;
             card.target = "_blank"; 
-            
-            // ADDED: hover:shadow-glow logic (custom shadow via CSS/Tailwind)
-            // Added bg-black so 'contain' images look cinematic
             card.className = "album-card bg-black group relative block h-80 rounded-2xl overflow-hidden cursor-pointer shadow-xl transform transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_0_30px_rgba(59,130,246,0.4)]";
-            
             card.style.animation = `fadeIn 0.6s ease-out ${index * 0.1}s forwards`;
             card.style.opacity = '0';
 
-            // ADDED: Logic to handle 'fit' and 'position' from the data
             const objectFitClass = album.fit ? `object-${album.fit}` : 'object-cover';
             const objectPosClass = album.position ? `object-${album.position}` : 'object-center';
+            const isFav = favorites.includes(album.id);
+            const favIconClass = isFav ? 'ph-fill ph-heart text-white' : 'ph-bold ph-heart text-white';
+            const favBtnBg = isFav ? 'bg-brand-accent' : 'bg-white/10';
 
             card.innerHTML = `
-                <img 
-                    src="${album.image}" 
-                    alt="${album.title}" 
-                    class="absolute inset-0 w-full h-full ${objectFitClass} ${objectPosClass} animate-ken-burns"
-                >
-                <!-- Dark Gradient Overlay -->
+                <img src="${album.image}" alt="${album.title}" class="absolute inset-0 w-full h-full ${objectFitClass} ${objectPosClass} animate-ken-burns">
                 <div class="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent opacity-80 transition-opacity duration-300"></div>
-                
-                <!-- Hover Overlay with Blue Tint -->
                 <div class="album-overlay absolute inset-0 bg-brand-accent/20 opacity-0 transition-opacity duration-300 mix-blend-overlay"></div>
-                
+                <button id="fav-btn-${album.id}" onclick="toggleFavorite(event, ${album.id})" class="absolute top-4 right-4 z-20 p-2 rounded-full backdrop-blur-md transition-all duration-300 hover:scale-110 active:scale-95 ${favBtnBg}">
+                    <i class="${favIconClass} text-lg"></i>
+                </button>
                 <div class="absolute bottom-0 left-0 w-full p-6 translate-y-2 group-hover:translate-y-0 transition-transform duration-300">
                     <div class="flex justify-between items-end">
                         <div>
@@ -388,6 +571,7 @@
                     </div>
                 </div>
             `;
+            addTiltEffect(card);
             grid.appendChild(card);
         });
 
